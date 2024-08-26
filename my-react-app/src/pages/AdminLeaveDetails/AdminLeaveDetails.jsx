@@ -8,10 +8,16 @@ function LeaveDetails() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAction, setSelectedAction] = useState('');
   const [description, setDescription] = useState('');
+  const [vacationLeaveLess, setVacationLeaveLess] = useState('');
+  const [sickLeaveLess, setSickLeaveLess] = useState('');
+  const [mandatoryLeaveLess, setMandatoryLeaveLess] = useState('');
+  const [specialLeaveLess, setSpecialLeaveLess] = useState('');
   const [disapprovalReasonB, setDisapprovalReasonB] = useState('');
   const [disapprovalReasonD, setDisapprovalReasonD] = useState('');
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
-
+  const [daysWithPay, setDaysWithPay] = useState('');
+  const [daysWithoutPay, setDaysWithoutPay] = useState('');
+  const [others, setOthers] = useState('');
   const sigCanvasHR = useRef({});
   const sigCanvasSupervisor = useRef({});
   const sigCanvasManager = useRef({});
@@ -147,48 +153,77 @@ function LeaveDetails() {
           {/* Details of Action UI */}
           <div className="mt-12 bg-white p-8 shadow-lg rounded-md">
           <h1 className="text-3xl font-bold mb-8">Details of Action</h1>
-            {/* Certification of Leave Credits */}
-            <div className="mb-8 p-6 border rounded-lg">
-              <h3 className="text-lg font-semibold mb-4">A. CERTIFICATION OF LEAVE CREDITS</h3>
-              <div className="mb-4">
-                <p className="mb-2 font-bold">
-                  As of {currentDateTime.toLocaleDateString()} {currentDateTime.toLocaleTimeString()}
-                </p>
-                <table className="w-full border border-gray-300">
-                  <thead>
-                    <tr className="bg-gray-200">
-                     <th className="border border-gray-300 px-4 py-2 text-left"> </th>
-                      <th className="border border-gray-300 px-4 py-2 text-left">Vacation Leave</th>
-                      <th className="border border-gray-300 px-4 py-2 text-left">Sick Leave</th>
-                      <th className="border border-gray-300 px-4 py-2 text-left">Mandatory/Forced Leave</th>
-                      <th className="border border-gray-300 px-4 py-2 text-left">Special Leave</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2">Total Earned</td>
-                      <td className="border border-gray-300 px-4 py-2"></td>
-                      <td className="border border-gray-300 px-4 py-2"></td>
-                      <td className="border border-gray-300 px-4 py-2"></td>
-                      <td className="border border-gray-300 px-4 py-2"></td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2">Less this application</td>
-                      <td className="border border-gray-300 px-4 py-2"></td>
-                      <td className="border border-gray-300 px-4 py-2"></td>
-                      <td className="border border-gray-300 px-4 py-2"></td>
-                      <td className="border border-gray-300 px-4 py-2"></td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2">Balance</td>
-                      <td className="border border-gray-300 px-4 py-2"></td>
-                      <td className="border border-gray-300 px-4 py-2"></td>
-                      <td className="border border-gray-300 px-4 py-2"></td>
-                      <td className="border border-gray-300 px-4 py-2"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          {/* Certification of Leave Credits */}
+          <div className="mb-8 p-6 border rounded-lg">
+            <h3 className="text-lg font-semibold mb-4">A. CERTIFICATION OF LEAVE CREDITS</h3>
+            <div className="mb-4">
+              <p className="mb-2 font-bold">
+                As of {currentDateTime.toLocaleDateString()} {currentDateTime.toLocaleTimeString()}
+              </p>
+              <table className="w-full border border-gray-300">
+                <thead>
+                  <tr className="bg-gray-200">
+                    <th className="border border-gray-300 px-4 py-2 text-left"> </th>
+                    <th className="border border-gray-300 px-4 py-2 text-left">Vacation Leave</th>
+                    <th className="border border-gray-300 px-4 py-2 text-left">Sick Leave</th>
+                    <th className="border border-gray-300 px-4 py-2 text-left">Mandatory/Forced Leave</th>
+                    <th className="border border-gray-300 px-4 py-2 text-left">Special Leave</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">Total Earned</td>
+                    <td className="border border-gray-300 px-4 py-2"></td>
+                    <td className="border border-gray-300 px-4 py-2"></td>
+                    <td className="border border-gray-300 px-4 py-2"></td>
+                    <td className="border border-gray-300 px-4 py-2"></td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">Less this application</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      <input 
+                        type="number" 
+                        value={vacationLeaveLess} 
+                        onChange={(e) => setVacationLeaveLess(e.target.value)} 
+                        className="border p-1 rounded w-full"
+                      />
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      <input 
+                        type="number" 
+                        value={sickLeaveLess} 
+                        onChange={(e) => setSickLeaveLess(e.target.value)} 
+                        className="border p-1 rounded w-full"
+                      />
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      <input 
+                        type="number" 
+                        value={mandatoryLeaveLess} 
+                        onChange={(e) => setMandatoryLeaveLess(e.target.value)} 
+                        className="border p-1 rounded w-full"
+                      />
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      <input 
+                        type="number" 
+                        value={specialLeaveLess} 
+                        onChange={(e) => setSpecialLeaveLess(e.target.value)} 
+                        className="border p-1 rounded w-full"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">Balance</td>
+                    <td className="border border-gray-300 px-4 py-2"></td>
+                    <td className="border border-gray-300 px-4 py-2"></td>
+                    <td className="border border-gray-300 px-4 py-2"></td>
+                    <td className="border border-gray-300 px-4 py-2"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
 
               {/* HR Officer Signature */}
               <div className="mb-8">
@@ -221,7 +256,8 @@ function LeaveDetails() {
             <div className="mb-8 p-6 border rounded-lg">
               <h3 className="text-lg font-semibold mb-4">B. RECOMMENDATION</h3>
               <div className="mb-4">
-                <h4 className="font-semibold mb-2">For approval/disapproval of:</h4>
+                <p>For approval</p>
+                <p>For disapproval due to:</p>
                 <textarea
                   value={disapprovalReasonB}
                   onChange={(e) => setDisapprovalReasonB(e.target.value)}
@@ -263,20 +299,75 @@ function LeaveDetails() {
                   </button>
                 </div>
               </div>
+              <div className="mb-8">
+                <label className="block text-sm font-bold mb-2">Signature (Div. / Dept. Manager):</label>
+                <SignatureCanvas
+                  ref={sigCanvasManager}
+                  penColor="black"
+                  canvasProps={{ width: getCanvasWidth(), height: 200, className: 'border w-full p-2 rounded' }}
+                />
+                <div className="mt-2 flex space-x-4">
+                  <button
+                    type="button"
+                    onClick={() => clearSignature(sigCanvasManager)}
+                    className="bg-gray-500 text-white font-bold py-2 px-4 rounded-md"
+                  >
+                    Clear
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => saveSignature(sigCanvasManager)}
+                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
             </div>
 
             {/* Approval/Disapproval */}
             <div className="mb-8 p-6 border rounded-lg">
               <h3 className="text-lg font-semibold mb-4">C. APPROVED FOR:</h3>
-              <ul className="list-disc list-inside mb-4">
-                <li>1. CTC</li>
-                <li>2. Sick Leave (1 day with pay)</li>
-                <li>3. Date</li>
-              </ul>
+              <div className="pl-4">
+                <div className="flex items-center mb-2">
+                  <label htmlFor="daysWithPay" className="mr-4 w-40">Days with pay:</label>
+                  <input 
+                    type="number" 
+                    id="daysWithPay" 
+                    value={daysWithPay} 
+                    onChange={(e) => setDaysWithPay(e.target.value)} 
+                    className="border p-1 rounded w-24"
+                  />
+                </div>
+                <div className="flex items-center mb-2">
+                  <label htmlFor="daysWithoutPay" className="mr-4 w-40">Days without pay:</label>
+                  <input 
+                    type="number" 
+                    id="daysWithoutPay" 
+                    value={daysWithoutPay} 
+                    onChange={(e) => setDaysWithoutPay(e.target.value)} 
+                    className="border p-1 rounded w-24"
+                  />
+                </div>
+                <div className="flex items-center mb-2">
+                  <label htmlFor="others" className="mr-4 w-40">Others (Specify):</label>
+                  <input 
+                    type="number" 
+                    id="others" 
+                    value={others} 
+                    onChange={(e) => setOthers(e.target.value)} 
+                    className="border p-1 rounded w-24"
+                  />
+                </div>
+              </div>
 
-              <div className="mb-4">
-                <h4 className="font-semibold mb-2">Disapproved due to:</h4>
-                <textarea
+            </div>
+
+            {/* Final Approval/Disapproval */}
+            
+            <div className="mb-8 p-6 border rounded-lg">
+              <h3 className="text-lg font-semibold mb-4">D. DISAPPROVED DUE TO:</h3>
+              <textarea
                 value={disapprovalReasonD}
                 onChange={(e) => setDisapprovalReasonD(e.target.value)}
                 className="border rounded w-full p-2"
@@ -292,40 +383,6 @@ function LeaveDetails() {
               </button>
               </div>
 
-              {/* Manager Signature */}
-              <div className="mb-8">
-                <label className="block text-sm font-bold mb-2">Signature (Manager):</label>
-                <SignatureCanvas
-                  ref={sigCanvasManager}
-                  penColor="black"
-                  canvasProps={{ width: getCanvasWidth(), height: 200, className: 'border w-full p-2 rounded' }}
-                />
-                <div className="mt-2 flex space-x-4">
-                  <button
-                    type="button"
-                    onClick={() => clearSignature(sigCanvasManager)}
-                    className="bg-gray-500 text-white font-bold py-2 px-4 rounded"
-                  >
-                    Clear
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => saveSignature(sigCanvasManager)}
-                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-                  >
-                    Save
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Final Approval/Disapproval */}
-            <div className="p-6 border rounded-lg">
-              <h3 className="text-lg font-semibold mb-4">D. FINAL APPROVAL/DISAPPROVAL:</h3>
-              <ul className="list-disc list-inside mb-4">
-                <li>Approved Leave of Absence</li>
-                <li>Disapproved due to insufficient leave credits</li>
-              </ul>
 
               {/* GM Signature */}
               <div className="mb-8">
@@ -352,7 +409,7 @@ function LeaveDetails() {
                   </button>
                 </div>
               </div>
-            </div>
+           
           </div>
         </main>
       </div>
