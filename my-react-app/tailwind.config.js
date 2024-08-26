@@ -18,7 +18,7 @@ export default {
       },
 
       minWidth:{    
-        'minwid' : '500px',
+        'minwid' : '300px',
       },
 
       height:{

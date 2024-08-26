@@ -29,7 +29,7 @@ function Sidebar1 () {
      <aside className="w-full h-auto min-w-minwid lg:w-1/4 bg-blue-500 text-white p-8">
         <h1 onClick={navigateLandingPage} className="text-4xl font-bold mb-20 text-center">Employee Leave Management</h1>
        
-        <nav>
+        <nav className='pl-12'> 
           <ul >
             <li className="mb-5">
               <button onClick={navigateApplyLeave}  className="flex items-center space-x-2 hover:bg-blue-700 p-2 rounded-md w-full">

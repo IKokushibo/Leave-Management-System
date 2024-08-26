@@ -3,6 +3,9 @@ import { Helmet } from 'react-helmet';
 import SideBard from  '../../Components/Sidebar'
 
 function EmployeeSection() {
+    const navigateAddType = () => {
+    window.location.href = "/admin/add-employee"
+  }
   return (
     <>
       <Helmet>
@@ -19,7 +22,7 @@ function EmployeeSection() {
           <div className="bg-white p-8 shadow-lg rounded-md">
             <h2 className="text-2xl font-bold mb-6">List of Employees</h2>
             <div className="mb-6">
-              <button className="bg-green-500 text-white font-bold py-2 px-4 rounded-md hover:bg-green-700">
+              <button onClick={navigateAddType} className="bg-green-500 text-white font-bold py-2 px-4 rounded-md hover:bg-green-700">
                 Add New Employee
               </button>
             </div>
