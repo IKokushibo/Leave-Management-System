@@ -44,6 +44,27 @@ function AddNewLeaveType() {
                 <input type="text" className="border w-full p-2 rounded" placeholder="Available Leave Credits (e.g, 5 Sick Leave)" />
               </div>
 
+              <div>
+                <label className="block text-sm font-bold mb-2">Restoration Period</label>
+                <select className="border w-full p-2 rounded">
+                  <option>Choose..</option>
+                  <option value="ADMIN AND GENERAL SERVICES DEPARTMENT">Every Month</option>
+                  <option value="FINANCE AND COMMERCIAL DEPARTMENT">Every 2 Months</option>
+                  <option value="ENGINEERING AND OPERATIONS DEPARTMENT">Every 3 Months</option>
+                  <option value="GENERAL MANAGER">Every 4 Months</option>
+                  <option>Every 5 Months</option>
+                  <option value="ADMIN AND GENERAL SERVICES DEPARTMENT">Every 6 Months</option>
+                  <option value="FINANCE AND COMMERCIAL DEPARTMENT">Every 7 Months</option>
+                  <option value="ENGINEERING AND OPERATIONS DEPARTMENT">Every 8 Months</option>
+                  <option value="GENERAL MANAGER">Every 9 Months</option>
+                  <option value="FINANCE AND COMMERCIAL DEPARTMENT">Every 10 Months</option>
+                  <option value="ENGINEERING AND OPERATIONS DEPARTMENT">Every 11 Months</option>
+                  <option value="GENERAL MANAGER">Every 12 Months</option>
+                </select>
+
+
+              </div>
+
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md w-full mt-6">
                 Submit
               </button>
