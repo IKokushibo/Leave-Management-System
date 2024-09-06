@@ -1,12 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import SideBard from  '../../Components/Sidebar'
+import SideBard from '../../Components/Sidebar'
+
+import axios from "../../services/AxiosConfiguration"
 
 function DepartmentSection() {
+  const [departments, setDepartments] = useState([]);
+
   const navigateAddType = () => {
     window.location.href = "/admin/add-department"
+  }
 
-}
+  useEffect(() => {
+    const getDepartments = async () => {
+
+      try {
+        const url = "/users/departments";
+        const response = await axios.get(url);
+        setDepartments(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getDepartments();
+  }, [])
+
   return (
     <>
       <Helmet>
@@ -14,7 +33,7 @@ function DepartmentSection() {
       </Helmet>
 
       <div className="flex flex-col lg:flex-row min-h-screen">
-      <SideBard />
+        <SideBard />
 
         {/* Main Content */}
         <main className="w-full lg:w-3/4 p-10 bg-gray-100">
@@ -32,58 +51,34 @@ function DepartmentSection() {
                   <tr>
                     <th className="border px-4 py-2">
                       #
-                      <button className="ml-2">
-                        ⬆️
-                      </button>
                     </th>
                     <th className="border px-4 py-2">
                       Department
-                      <button className="ml-2">
-                        ⬆
-                      </button>
                     </th>
                     <th className="border px-4 py-2">
                       Shortform
-                      <button className="ml-2">
-                        ⬆
-                      </button>
                     </th>
                     <th className="border px-4 py-2">
                       Code
-                      <button className="ml-2">
-                        ⬆
-                      </button>
                     </th>
                     <th className="border px-4 py-2">
                       Created Date
-                      <button className="ml-2">
-                        ⬆
-                      </button>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td className="border px-4 py-2">1</td>
-                    <td className="border px-4 py-2">ADMIN AND GENERAL SERVICES</td>
-                    <td className="border px-4 py-2">HR</td>
-                    <td className="border px-4 py-2">HR160</td>
-                    <td className="border px-4 py-2">11/01/2020</td>
-                  </tr>
-                  <tr>
-                    <td className="border px-4 py-2">2</td>
-                    <td className="border px-4 py-2">FINANCE AND COMMERCIAL</td>
-                    <td className="border px-4 py-2">IT</td>
-                    <td className="border px-4 py-2">IT807</td>
-                    <td className="border px-4 py-2">11/01/2020</td>
-                  </tr>
-                  <tr>
-                    <td className="border px-4 py-2">3</td>
-                    <td className="border px-4 py-2">ENGINEERING AND OPERATIONS</td>
-                    <td className="border px-4 py-2">OP</td>
-                    <td className="border px-4 py-2">OP640</td>
-                    <td className="border px-4 py-2">12/03/2020</td>
-                  </tr>
+
+                  {Array.isArray(departments) && departments.map((element, index) => (
+                    <tr key={index}>
+                      <td className="border px-4 py-2">{element.id}</td>
+                      <td className="border px-4 py-2">{element.name}</td>
+                      <td className="border px-4 py-2">{element['short-form']}</td>
+                      <td className="border px-4 py-2">{element.code}</td>
+                      <td className="border px-4 py-2">{element['created-date']}</td>
+                    </tr>
+                  ))}
+
+
                   {/* Additional department rows would go here */}
                 </tbody>
               </table>

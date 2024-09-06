@@ -1,65 +1,55 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import Sidebar  from '../../Components/Sidebar';
+import Sidebar from '../../Components/Sidebar';
+
+import axios from "../../services/AxiosConfiguration"
+import { useNavigate } from 'react-router-dom';
+
+import Loading from '../../Components/LoadingAnimation/Loading';
 
 function LeaveHistory() {
-  const [submenuOpen, setSubmenuOpen] = useState(false);
+  const [leaveHistories, setLeaveHistories] = useState([]);
 
-  const toggleSubmenu = () => {
-    setSubmenuOpen(!submenuOpen);
-  };
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState();
 
-  // Example leave data
-  const leaves = [
-    {
-      id: 1,
-      employeeId: 'ASTR000084',
-      fullName: 'Jennifer Foltz',
-      leaveType: 'Casual Leave',
-      appliedOn: '2022-02-09 21:16:15',
-      status: 'Pending',
-    },
-    {
-      id: 2,
-      employeeId: 'ASTR001245',
-      fullName: 'Johnny Scott',
-      leaveType: 'Compensatory Leave',
-      appliedOn: '2021-03-03 18:09:15',
-      status: 'Pending',
-    },
-    {
-      id: 3,
-      employeeId: 'ASTR002996',
-      fullName: 'Carol Reed',
-      leaveType: 'Medical Leave',
-      appliedOn: '2021-03-03 17:54:44',
-      status: 'Approved',
-    },
-    {
-      id: 4,
-      employeeId: 'ASTR004699',
-      fullName: 'Shawn Den',
-      leaveType: 'Paternity Leave',
-      appliedOn: '2021-03-03 16:43:18',
-      status: 'Pending',
-    },
-    {
-      id: 5,
-      employeeId: 'ASTR001245',
-      fullName: 'Johnny Scott',
-      leaveType: 'Casual Leave',
-      appliedOn: '2021-03-02 15:17:42',
-      status: 'Declined',
-    },
-    {
-      id: 6,
-      employeeId: 'ASTR001369',
-      fullName: 'Milton Doe',
-      leaveType: 'Medical Leave',
-      appliedOn: '2021-03-02 15:16:01',
-      status: 'Declined',
-    },
-  ];
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getLeaves = async () => {
+      setIsLoading(true);
+      try {
+        const url = "/users/all-leaves";
+        const response = await axios.get(url);
+        setLeaveHistories(response.data);
+        console.log(response);
+      } catch (error) {
+        setIsError(true);
+        setError(error);
+      }
+      setIsLoading(false);
+    }
+
+    getLeaves();
+  }, []);
+
+  const viewDetailsHandler = (leaveId) => {
+    navigate(`/admin/leave-details/${leaveId}`);
+  }
+
+  if(isLoading){
+    return(
+      <>  
+        <Loading/>
+      </>
+    )
+  }
+
+  if(isError){
+    console.log(error);
+    return;
+  }
 
   return (
     <>
@@ -68,7 +58,7 @@ function LeaveHistory() {
       </Helmet>
 
       <div className="flex flex-col lg:flex-row min-h-screen">
-       <Sidebar/>
+        <Sidebar />
 
         {/* Main Content */}
         <main className="w-full lg:w-3/4 p-10 bg-gray-100">
@@ -88,18 +78,18 @@ function LeaveHistory() {
                 </tr>
               </thead>
               <tbody>
-                {leaves.map((leave, index) => (
-                  <tr className="text-center h-14" key={leave.id}>
-                    <td className="border px-4 py-2">{index + 1}</td>
-                    <td className="border px-4 py-2">{leave.employeeId}</td>
-                    <td className="border px-4 py-2 text-blue-500 hover:underline cursor-pointer">{leave.fullName}</td>
-                    <td className="border px-4 py-2">{leave.leaveType}</td>
-                    <td className="border px-4 py-2">{leave.appliedOn}</td>
-                    <td className={`border px-4 py-2 ${leave.status === 'Pending' ? 'text-yellow-500' : leave.status === 'Approved' ? 'text-green-500' : 'text-red-500'}`}>
-                      {leave.status}
+                {Array.isArray(leaveHistories) && leaveHistories.map((leave, index) => (
+                  <tr className="text-center h-14" key={index}>
+                    <td className="border px-4 py-2">{leave.id}</td>
+                    <td className="border px-4 py-2">{leave.user['employee-id']}</td>
+                    <td className="border px-4 py-2 text-blue-500 hover:underline cursor-pointer">{leave.user['first-name'] + " " + leave.user['last-name']}</td>
+                    <td className="border px-4 py-2">{leave['type-of-leave']}</td>
+                    <td className="border px-4 py-2">{leave['date-of-filing']}</td>
+                    <td className={`border px-4 py-2 ${leave['leave-status'] === 'Pending' ? 'text-yellow-500' : leave['leave-status'] === 'Approved' ? 'text-green-500' : 'text-red-500'}`}>
+                      {leave['leave-status']}
                     </td>
                     <td className="border px-4 py-2">
-                      <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md">
+                      <button type='button' onClick={() => viewDetailsHandler(leave.id)} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md">
                         View Details
                       </button>
                     </td>

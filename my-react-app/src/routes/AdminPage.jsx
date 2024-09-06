@@ -61,7 +61,7 @@ const AddEmployeeRoute  =  {
    }
 
    const LeaveDetailsRoute  =  {
-    path: "/admin/leave-details",
+    path: "/admin/leave-details/:id",
     element:  <LeaveDetailsRT/>
    }
 

@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import Apply from './UserWhite.svg'
 import Credit from './User_Card_ID.svg'
 import History from './File_Blank.svg'
+import Lock from "../lock.svg"
 
 function Sidebar1 () {
   const [isClicked,  setIsClicked] = useState(false);
@@ -21,6 +22,10 @@ function Sidebar1 () {
   }
   const navigateLandingPage = () => {
     window.location.href  = '/employee/landing-page';
+  }
+  
+  const navigateChangePassword = () => {
+    window.location.href = '/account/change-password';
   }
 
   return  (
@@ -50,6 +55,12 @@ function Sidebar1 () {
               </button>
             </li>
 
+            <li className="mb-5">
+              <button onClick={navigateChangePassword} className="flex items-center space-x-2 hover:bg-blue-700 p-2 rounded-md w-full">
+                <img src={Lock} className='size-7' alt="" />
+                <span className='text-xl'>Change Password</span>
+              </button>
+            </li>
           </ul>
 
         </nav>
